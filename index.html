@@ -588,7 +588,7 @@
 
         for (let key in anahtarKelimeler) {
             // Kullanıcının yazdığı kelime, haritadaki kelimelerden biriyle eşleşiyor mu?
-            const eslesme Var = anahtarKelimeler[key].some(kelime => query.includes(kelime) || kelime.includes(query));
+            const eslesmeVar = anahtarKelimeler[key].some(kelime => query.includes(kelime) || kelime.includes(query));
             
             if (eslesmeVar) {
                 let baslik = key.toUpperCase() + " Bölümü";
@@ -614,4 +614,265 @@
             document.getElementById('search-input').value = '';
         }
     }
+</script>
+<button id="theme-toggle-btn" onclick="toggleTheme()">
+    <i class="fa-solid fa-moon"></i> <span id="theme-btn-text">Gece Modu</span>
+</button>
+
+<div id="search-box-container">
+    <div class="search-input-wrapper">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input type="text" id="search-input" placeholder="Sitede ara (Örn: pupdan nasıl kurtulurum)..." oninput="handleSearch()">
+    </div>
+    <div id="search-results" class="hidden"></div>
+</div>
+
+<div id="settings-panel">
+    <button id="panel-toggle-btn" onclick="toggleSettingsPanel()">
+        <i class="fa-solid fa-gear"></i>
+    </button>
+    <div id="panel-content" class="hidden">
+        <h3 id="panel-title-text"><i class="fa-solid fa-sliders"></i> Özelleştir</h3>
+        <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 10px 0;">
+        
+        <div class="setting-group">
+            <label id="label-lang"><i class="fa-solid fa-language"></i> Dil / Language</label>
+            <select id="lang-select" onchange="changeLanguage(this.value)">
+                <option value="tr">Türkçe</option>
+                <option value="en">English</option>
+                <option value="ru">Русский</option>
+            </select>
+        </div>
+
+        <div class="setting-group">
+            <label id="label-cursor"><i class="fa-solid fa-arrow-pointer"></i> Mouse İmleci</label>
+            <select id="cursor-select" onchange="changeCursor(this.value)">
+                <option value="default" id="opt-cur-def">Varsayılan</option>
+                <option value="pointer" id="opt-cur-ptr">El İşareti</option>
+                <option value="crosshair" id="opt-cur-cross">Hedef Artısı</option>
+                <option value="text" id="opt-cur-txt">Metin Seçimi</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* STİLLER - Hiçbir tasarımın bozulmaması için izole edilmiştir */
+    #theme-toggle-btn {
+        position: fixed; top: 90px; right: 20px; z-index: 9999;
+        background-color: #1e293b; color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3);
+        padding: 10px 16px; border-radius: 20px; font-family: 'Poppins', sans-serif;
+        font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        display: flex; align-items: center; gap: 8px; transition: all 0.3s ease;
+    }
+
+    body.light-mode { background-color: #ffffff !important; color: #008b8b !important; }
+    body.light-mode .content-card, body.light-mode #theme-toggle-btn, body.light-mode #panel-content, body.light-mode #search-results {
+        background-color: #f1f5f9 !important; color: #0e7490 !important; border-color: #22d3ee !important;
+    }
+    body.light-mode .info-block h3, body.light-mode .content-header h2, body.light-mode .content-header i { color: #0891b2 !important; }
+    body.light-mode #search-input { background-color: #ffffff !important; color: #0f172a !important; border-color: #cbd5e1 !important; }
+
+    #search-box-container { position: fixed; top: 145px; right: 20px; z-index: 9998; width: 320px; font-family: 'Poppins', sans-serif; }
+    .search-input-wrapper { position: relative; width: 100%; }
+    .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #94a3b8; }
+    #search-input { width: 100%; background-color: #1e293b; color: #f8fafc; border: 1px solid rgba(56, 189, 248, 0.3); padding: 10px 12px 10px 38px; border-radius: 8px; outline: none; box-shadow: 0 4px 12px rgba(0,0,0,0.2); font-size: 0.9rem; }
+    #search-results { background-color: #1e293b; border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 8px; margin-top: 5px; max-height: 250px; overflow-y: auto; box-shadow: 0 8px 20px rgba(0,0,0,0.4); padding: 8px; }
+    #search-results.hidden { display: none; }
+    .search-item { padding: 8px 12px; border-radius: 6px; cursor: pointer; color: #f8fafc; font-size: 0.85rem; transition: background 0.2s; }
+    .search-item:hover { background-color: rgba(56, 189, 248, 0.15); color: #38bdf8; }
+    .search-warning { color: #f43f5e; font-weight: 600; font-size: 0.85rem; padding: 5px; border-bottom: 1px solid rgba(244, 63, 94, 0.2); margin-bottom: 5px; }
+
+    #settings-panel { position: fixed; bottom: 20px; right: 20px; z-index: 9999; font-family: 'Poppins', sans-serif; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+    #panel-toggle-btn { background-color: #38bdf8; color: #0f172a; border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4); transition: transform 0.3s ease, background-color 0.3s; }
+    #panel-toggle-btn:hover { transform: rotate(45deg); background-color: #0ea5e9; }
+    #panel-content { background-color: #1e293b; border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 15px; width: 220px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); transition: all 0.3s ease; }
+    #panel-content.hidden { opacity: 0; transform: translateY(20px); pointer-events: none; display: none; }
+    #panel-content h3 { font-size: 1rem; color: #f8fafc; margin: 0 0 8px 0; display: flex; align-items: center; gap: 8px; }
+    .setting-group { margin-top: 12px; }
+    .setting-group label { display: block; font-size: 0.8rem; color: #94a3b8; margin-bottom: 5px; }
+    .setting-group select { width: 100%; background-color: #0f172a; color: #f8fafc; border: 1px solid #334155; padding: 8px; border-radius: 6px; outline: none; cursor: pointer; font-size: 0.85rem; }
+</style>
+
+<script>
+    // GLOBAL DURUM DEĞİŞKENLERİ
+    let mevcutDl = 'tr';
+    let mevcutMd = 'gece';
+    let aktifBoluMKey = 'korunma';
+
+    // TAM SÖZLÜK VERİ TABANI (Tüm arayüz ve içerikler buraya bağlandı)
+    const dilVerileri = {
+        tr: {
+            themeGece: "Gece Modu", themeGunduz: "Gündüz Modu",
+            searchPlaceholder: "Sitede ara (Örn: pupdan nasıl kurtulurum)...",
+            searchWarning: "⚠️ Bu önerilere de bakabilirsiniz:",
+            panelTitle: "Özelleştir", labelLang: "Dil / Language", labelCursor: "Mouse İmleci",
+            optCurDef: "Varsayılan", optCurPtr: "El İşareti", optCurCross: "Hedef Artısı", optCurTxt: "Metin Seçimi",
+            menu: { korunma: "Korsanlardan Korunma", malware: "Malware Nedir?", trojan: "Trojan Nedir?", pup: "PUP Nedir?", popup: "Pop-up Virüsleri", os: "Güvenli İşletim Sistemleri" },
+            searchKeywords: {
+                korunma: ["korunma", "hacker", "saldırı", "güvenlik", "şifre"],
+                malware: ["malware", "zararlı yazılım", "virüs"],
+                trojan: ["trojan", "truva atı", "backdoor", "keylogger"],
+                pup: ["pup", "istenmeyen program", "reklam yazılımı", "kurtulma"],
+                popup: ["popup", "pop-up", "pencereler", "reklam engelleme", "kurtulma"],
+                os: ["işletim sistemi", "os", "windows", "linux", "macos"]
+            }
+        },
+        en: {
+            themeGece: "Night Mode", themeGunduz: "Day Mode",
+            searchPlaceholder: "Search site (e.g., how to get rid of pup)...",
+            searchWarning: "⚠️ You might also look at these suggestions:",
+            panelTitle: "Customize", labelLang: "Language", labelCursor: "Mouse Cursor",
+            optCurDef: "Default", optCurPtr: "Pointer", optCurCross: "Crosshair", optCurTxt: "Text Select",
+            menu: { korunma: "Hacker Protection", malware: "What is Malware?", trojan: "What is Trojan?", pup: "What is PUP?", popup: "Pop-up Viruses", os: "Secure OS" },
+            searchKeywords: {
+                korunma: ["protection", "hacker", "attack", "security", "password"],
+                malware: ["malware", "malicious", "virus"],
+                trojan: ["trojan", "trojan horse", "backdoor", "keylogger"],
+                pup: ["pup", "unwanted program", "adware", "remove"],
+                popup: ["popup", "pop-up", "windows", "adblock", "get rid"],
+                os: ["operating system", "os", "windows", "linux", "macos"]
+            }
+        },
+        ru: {
+            themeGece: "Ночной режим", themeGunduz: "Дневной режим",
+            searchPlaceholder: "Поиск по сайту (напр., как избавиться от pup)...",
+            searchWarning: "⚠️ Вы также можете посмотреть эти рекомендации:",
+            panelTitle: "Настройки", labelLang: "Язык", labelCursor: "Курсор мыши",
+            optCurDef: "По умолчанию", optCurPtr: "Указатель", optCurCross: "Перекрестие", optCurTxt: "Выбор текста",
+            menu: { korunma: "Защита от хакеров", malware: "Что такое Malware?", trojan: "Что такое Trojan?", pup: "Что такое PUP?", popup: "Pop-up Вирусы", os: "Безопасные ОС" },
+            searchKeywords: {
+                korunma: ["защита", "хакер", "атака", "безопасность", "пароль"],
+                malware: ["malware", "вредная программа", "вирус"],
+                trojan: ["trojan", "троян", "троянский конь", "бэкдор", "кейлоггер"],
+                pup: ["pup", "нежелательная программа", "рекламное по", "удалить"],
+                popup: ["popup", "всплывающие окна", "реклама", "блокировка"],
+                os: ["операционная система", "ос", "windows", "linux", "macos"]
+            }
+        }
+    };
+
+    // PANEL AÇMA / KAPAMA
+    function toggleSettingsPanel() {
+        document.getElementById('panel-content').classList.toggle('hidden');
+    }
+
+    // CURSOR DEĞİŞTİRME
+    function changeCursor(cursorType) {
+        document.body.style.cursor = cursorType;
+        document.querySelectorAll('a, button, select, input').forEach(item => {
+            item.style.cursor = (cursorType === 'default') ? 'pointer' : cursorType;
+        });
+    }
+
+    // TEMA DEĞİŞTİRME
+    function toggleTheme() {
+        const body = document.body;
+        const btnIcon = document.querySelector('#theme-toggle-btn i');
+        body.classList.toggle('light-mode');
+        
+        mevcutMod = body.classList.contains('light-mode') ? 'gunduz' : 'gece';
+        btnIcon.className = mevcutMod === 'gunduz' ? "fa-solid fa-sun" : "fa-solid fa-moon";
+        
+        document.getElementById('theme-btn-text').innerText = mevcutMod === 'gunduz' ? dilVerileri[mevcutDil].themeGunduz : dilVerileri[mevcutDil].themeGece;
+    }
+
+    // TAM DİL DEĞİŞTİRME FONKSİYONU (Arayüzü anında güncelleştirir)
+    function changeLanguage(lang) {
+        mevcutDil = lang;
+        const veri = dilVerileri[lang];
+
+        // 1. Temayı ve Arama Giriş Alanlarını Güncelle
+        document.getElementById('theme-btn-text').innerText = mevcutMod === 'gunduz' ? veri.themeGunduz : veri.themeGece;
+        document.getElementById('search-input').placeholder = veri.searchPlaceholder;
+
+        // 2. Ayarlar Panelindeki Metinleri Güncelle
+        document.getElementById('panel-title-text').innerHTML = `<i class="fa-solid fa-sliders"></i> ${veri.panelTitle}`;
+        document.getElementById('label-lang').innerHTML = `<i class="fa-solid fa-language"></i> ${veri.labelLang}`;
+        document.getElementById('label-cursor').innerHTML = `<i class="fa-solid fa-arrow-pointer"></i> ${veri.labelCursor}`;
+        document.getElementById('opt-cur-def').innerText = veri.optCurDef;
+        document.getElementById('opt-cur-ptr').innerText = veri.optCurPtr;
+        document.getElementById('opt-cur-cross').innerText = veri.optCurCross;
+        document.getElementById('opt-cur-txt').innerText = veri.optCurTxt;
+
+        // 3. Üst Menüdeki Linklerin Yazılarını Güncelle
+        document.getElementById('nav-korunma').innerText = veri.menu.korunma;
+        document.getElementById('nav-malware').innerText = veri.menu.malware;
+        document.getElementById('nav-trojan').innerText = veri.menu.trojan;
+        document.getElementById('nav-pup').innerText = veri.menu.pup;
+        document.getElementById('nav-popup').innerText = veri.menu.popup;
+        document.getElementById('nav-os').innerText = veri.menu.os;
+
+        // 4. script.js'deki showContent fonksiyonunu tetikle ki ana içerik de anında o dile dönsün
+        if (typeof window.showContent === 'function') {
+            window.showContent(aktifBoluMKey);
+        }
+    }
+
+    // GÖZDEN GEÇİRİLMİŞ ARAMA MOTORU FONKSİYONU
+    function handleSearch() {
+        const query = document.getElementById('search-input').value.trim().toLowerCase();
+        const resultsDiv = document.getElementById('search-results');
+        const veri = dilVerileri[mevcutDil];
+        
+        if (query.length === 0) {
+            resultsDiv.classList.add('hidden');
+            resultsDiv.innerHTML = '';
+            return;
+        }
+
+        resultsDiv.classList.remove('hidden');
+        resultsDiv.innerHTML = '';
+
+        // Filtre: Klavyeye rastgele vurma ve anlamsız spam tespiti
+        const sacmaKarakter = /([a-z0-9])\1{3,}/g; 
+        const sessizHarfSerisi = /[^aeıioöuü\sаеёиоуыэюя]{5,}/g; 
+        if (sacmaKarakter.test(query) || sessizHarfSerisi.test(query) || query.includes("yyyaaa") || query.includes("eyye") || query.length > 25) {
+            resultsDiv.innerHTML = `
+                <div class="search-warning">${veri.searchWarning}</div>
+                <div class="search-item" onclick="tetikleArama('pup')">👉 ${veri.menu.pup}</div>
+                <div class="search-item" onclick="tetikleArama('popup')">👉 ${veri.menu.popup}</div>
+                <div class="search-item" onclick="tetikleArama('korunma')">👉 ${veri.menu.korunma}</div>
+            `;
+            return;
+        }
+
+        // Kelime eşleşme döngüsü
+        let sonucBulundu = false;
+        const keywords = veri.searchKeywords;
+
+        for (let key in keywords) {
+            // Hata düzeltildi: Boşluklar kaldırıldı ve güvenli dizi kontrolü sağlandı
+            let eslesmeVar = keywords[key].some(function(kelime) {
+                return query.includes(kelime) || kelime.includes(query);
+            });
+            
+            if (eslesmeVar) {
+                resultsDiv.innerHTML += `<div class="search-item" onclick="tetikleArama('${key}')">🔍 ${veri.menu[key]}</div>`;
+                sonucBulundu = true;
+            }
+        }
+
+        if (!sonucBulundu) {
+            resultsDiv.innerHTML = `<div class="search-item" style="color:#94a3b8; cursor:default;">...</div>`;
+        }
+    }
+
+    function tetikleArama(key) {
+        if (typeof window.showContent === 'function') {
+            aktifBoluMKey = key;
+            window.showContent(key);
+            document.getElementById('search-results').classList.add('hidden');
+            document.getElementById('search-input').value = '';
+        }
+    }
+
+    // script.js'deki showContent fonksiyonunu takibe alıp aktif bölmeyi kaydediyoruz
+    const orijinalShowContent = window.showContent;
+    window.showContent = function(key) {
+        aktifBoluMKey = key;
+        if(typeof orijinalShowContent === 'function') {
+            orijinalShowContent(key);
+        }
+    };
 </script>
