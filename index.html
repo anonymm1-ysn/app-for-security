@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SiberBilinç - Siber Güvenlik ve Korunma Rehberi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --accent-color: #38bdf8;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Navigasyon Barı */
+        nav {
+            background-color: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-color);
+        }
+
+        /* Kahraman (Hero) Bölümü */
+        .hero {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            background: radial-gradient(circle at top, rgba(56, 189, 248, 0.15), transparent);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #fff, var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            font-size: 1.1rem;
+        }
+
+        /* Ana İçerik Alanı */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Dinamik İçerik Kartı */
+        .content-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            min-height: 400px;
+            transition: all 0.3s ease;
+        }
+
+        .content-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(56, 189, 248, 0.2);
+            padding-bottom: 1rem;
+        }
+
+        .content-header i {
+            font-size: 2rem;
+            color: var(--accent-color);
+        }
+
+        .content-header h2 {
+            font-size: 2rem;
+        }
+
+        .info-block {
+            margin-bottom: 1.5rem;
+        }
+
+        .info-block h3 {
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.25rem;
+        }
+
+        .tips-list {
+            list-style-type: none;
+            margin-top: 1rem;
+        }
+
+        .tips-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 0.75rem;
+        }
+
+        .tips-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+
+        /* Alt Bilgi (Footer) */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Mobil Uyum */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none; /* İleride mobil menü eklenebilir */
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">
+            <i class="fa-solid to fa-shield-halved"></i> SiberBilinç
+        </div>
+        <ul class="nav-links">
+            <li><a onclick="showContent('korunma')" id="nav-korunma" class="active">Korsanlardan Korunma</a></li>
+            <li><a onclick="showContent('malware')" id="nav-malware">Malware Nedir?</a></li>
+            <li><a onclick="showContent('trojan')" id="nav-trojan">Trojan Nedir?</a></li>
+            <li><a onclick="showContent('pup')" id="nav-pup">PUP Nedir?</a></li>
+            <li><a onclick="showContent('popup')" id="nav-popup">Pop-up Virüsleri</a></li>
+            <li><a onclick="showContent('os')" id="nav-os">Güvenli İşletim Sistemleri</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <h1>Dijital Dünyada Güvende Kalın</h1>
+        <p>Hacker saldırılarına, zararlı yazılımlara ve internetteki gizli tehlikelere karşı siber bilincinizi artırın.</p>
+    </header>
+
+    <main class="container">
+        <section id="dynamic-content" class="content-card">
+            </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 SiberBilinç. Herkes İçin Siber Güvenlik Rehberi.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+<div id="settings-panel">
+    <button id="panel-toggle-btn" onclick="toggleSettingsPanel()">
+        <i class="fa-solid fa-gear"></i>
+    </button>
+
+    <div id="panel-content" class="hidden">
+        <h3><i class="fa-solid fa-sliders"></i> Özelleştir</h3>
+        <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 10px 0;">
+        
+        <div class="setting-group">
+            <label><i class="fa-solid fa-language"></i> Dil / Language</label>
+            <select id="lang-select" onchange="changeLanguage(this.value)">
+                <option value="tr">Türkçe</option>
+                <option value="en">English</option>
+                <option value="ru">Русский</option>
+            </select>
+        </div>
+
+        <div class="setting-group">
+            <label><i class="fa-solid fa-arrow-pointer"></i> Mouse İmleci</label>
+            <select id="cursor-select" onchange="changeCursor(this.value)">
+                <option value="default">Varsayılan (Default)</option>
+                <option value="pointer">El İşareti (Pointer)</option>
+                <option value="crosshair">Hedef Artısı (Crosshair)</option>
+                <option value="text">Metin Seçimi (Text)</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Sağ Altta Sabit Duracak Panel Stilleri */
+    #settings-panel {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 9999; /* Her şeyin üstünde görünmesi için */
+        font-family: 'Poppins', sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 10px;
+    }
+
+    #panel-toggle-btn {
+        background-color: #38bdf8;
+        color: #0f172a;
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        font-size: 1.5rem;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+        transition: transform 0.3s ease, background-color 0.3s;
+    }
+
+    #panel-toggle-btn:hover {
+        transform: rotate(45deg);
+        background-color: #0ea5e9;
+    }
+
+    #panel-content {
+        background-color: #1e293b;
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        border-radius: 12px;
+        padding: 15px;
+        width: 220px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        transition: all 0.3s ease;
+    }
+
+    #panel-content.hidden {
+        opacity: 0;
+        transform: translateY(20px);
+        pointer-events: none;
+        display: none;
+    }
+
+    #panel-content h3 {
+        font-size: 1rem;
+        color: #f8fafc;
+        margin: 0 0 8px 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .setting-group {
+        margin-top: 12px;
+    }
+
+    .setting-group label {
+        display: block;
+        font-size: 0.8rem;
+        color: #94a3b8;
+        margin-bottom: 5px;
+    }
+
+    .setting-group select {
+        width: 100%;
+        background-color: #0f172a;
+        color: #f8fafc;
+        border: 1px solid #334155;
+        padding: 8px;
+        border-radius: 6px;
+        outline: none;
+        cursor: pointer;
+        font-size: 0.85rem;
+    }
+
+    .setting-group select:focus {
+        border-color: #38bdf8;
+    }
+</style>
+
+<script>
+    // Paneli Açıp Kapatma Fonksiyonu
+    function toggleSettingsPanel() {
+        const panel = document.getElementById('panel-content');
+        panel.classList.toggle('hidden');
+    }
+
+    // Mouse İmlecini Değiştirme Fonksiyonu
+    function changeCursor(cursorType) {
+        // Tüm sayfa gövdesinin imlecini değiştirir
+        document.body.style.cursor = cursorType;
+        
+        // Menü linkleri gibi tıklanabilir alanların da imlecini ezmek istersen:
+        const links = document.querySelectorAll('a, button, select');
+        links.forEach(item => {
+            if(cursorType === 'default') {
+                item.style.cursor = 'pointer'; // Varsayılansa linkler standart el işareti kalır
+            } else {
+                item.style.style.cursor = cursorType; // Değilse seçilen imleç olur
+            }
+        });
+    }
+
+    // Dil Değiştirme Fonksiyonu (Gelecekte genişletebilmen için altyapı)
+    function changeLanguage(lang) {
+        if (lang === 'tr') {
+            alert('Dil Türkçe olarak seçildi! (İçerik çevirilerini script.js üzerinden bağlayabilirsin.)');
+            // İleride script.js'deki objeleri buraya bağlayacaksın
+        } else if (lang === 'en') {
+            alert('Language switched to English!');
+        } else if (lang === 'ru') {
+            alert('Язык изменен на Русский!');
+        }
+    }
+</script>
+<button id="theme-toggle-btn" onclick="toggleTheme()">
+    <i class="fa-solid fa-moon"></i> <span id="theme-btn-text">Gece Modu</span>
+</button>
+
+<div id="search-box-container">
+    <div class="search-input-wrapper">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input type="text" id="search-input" placeholder="Sitede ara (Örn: pupdan nasıl kurtulurum)..." oninput="handleSearch()">
+    </div>
+    <div id="search-results" class="hidden"></div>
+</div>
+
+<style>
+    /* SAĞ ÜST GECE/GÜNDÜZ BUTONU STİLLERİ */
+    #theme-toggle-btn {
+        position: fixed;
+        top: 90px; /* Navigasyon barının altında kalması için */
+        right: 20px;
+        z-index: 9999;
+        background-color: #1e293b;
+        color: #38bdf8;
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        padding: 10px 16px;
+        border-radius: 20px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+    }
+
+    /* GÜNDÜZ MODU CSS KURALLARI (Gündüz moduna geçince body'e 'light-mode' sınıfı eklenir) */
+    body.light-mode {
+        background-color: #ffffff !important;
+        color: #008b8b !important; /* Koyu Cyan Mavisi (Beyazda okunabilmesi için daha tok bir cyan) */
+    }
+    body.light-mode .content-card, 
+    body.light-mode #theme-toggle-btn,
+    body.light-mode #panel-content,
+    body.light-mode #search-results {
+        background-color: #f1f5f9 !important;
+        color: #0e7490 !important;
+        border-color: #22d3ee !important;
+    }
+    body.light-mode .info-block h3, 
+    body.light-mode .content-header h2,
+    body.light-mode .content-header i {
+        color: #0891b2 !important;
+    }
+    body.light-mode #search-input {
+        background-color: #ffffff !important;
+        color: #0f172a !important;
+        border-color: #cbd5e1 !important;
+    }
+
+    /* ARAMA MOTORU STİLLERİ */
+    #search-box-container {
+        position: fixed;
+        top: 145px; /* Gece modunun hemen altına hizalanır */
+        right: 20px;
+        z-index: 9998;
+        width: 320px;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .search-input-wrapper {
+        position: relative;
+        width: 100%;
+    }
+
+    .search-icon {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #94a3b8;
+    }
+
+    #search-input {
+        width: 100%;
+        background-color: #1e293b;
+        color: #f8fafc;
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        padding: 10px 12px 10px 38px;
+        border-radius: 8px;
+        outline: none;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        font-size: 0.9rem;
+    }
+
+    #search-input:focus {
+        border-color: #38bdf8;
+    }
+
+    #search-results {
+        background-color: #1e293b;
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        border-radius: 8px;
+        margin-top: 5px;
+        max-height: 250px;
+        overflow-y: auto;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        padding: 8px;
+    }
+
+    #search-results.hidden {
+        display: none;
+    }
+
+    .search-item {
+        padding: 8px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        color: #f8fafc;
+        font-size: 0.85rem;
+        transition: background 0.2s;
+    }
+
+    .search-item:hover {
+        background-color: rgba(56, 189, 248, 0.15);
+        color: #38bdf8;
+    }
+
+    .search-warning {
+        color: #f43f5e;
+        font-weight: 600;
+        font-size: 0.85rem;
+        padding: 5px;
+        border-bottom: 1px solid rgba(244, 63, 94, 0.2);
+        margin-bottom: 5px;
+    }
+</style>
+
+<script>
+    // Dil Takibi ve Gece/Gündüz Yazı Sözlüğü
+    let mevcutDil = 'tr';
+    let mevcutMod = 'gece';
+
+    const temaCevirilari = {
+        tr: { gece: "Gece Modu", gunduz: "Gündüz Modu", placeholder: "Sitede ara...", uyari: "⚠️ Bu önerilere de bakabilirsiniz:" },
+        en: { gece: "Night Mode", gunduz: "Day Mode", placeholder: "Search here...", uyari: "⚠️ You might also look at these:" },
+        ru: { gece: "Ночной режим", gunduz: "Дневной режим", placeholder: "Поиск на сайте...", uyari: "⚠️ Вы da можете посмотреть это:" }
+    };
+
+    // Temayı Değiştiren Ana Fonksiyon
+    function toggleTheme() {
+        const body = document.body;
+        const btnIcon = document.querySelector('#theme-toggle-btn i');
+        const btnText = document.getElementById('theme-btn-text');
+
+        body.classList.toggle('light-mode');
+
+        if (body.classList.contains('light-mode')) {
+            mevcutMod = 'gunduz';
+            btnIcon.className = "fa-solid fa-sun";
+        } else {
+            mevcutMod = 'gece';
+            btnIcon.className = "fa-solid fa-moon";
+        }
+        
+        // Buton metnini o an seçili olan dile göre güncelle
+        btnText.innerText = temaCevirilari[mevcutDil][mevcutMod];
+    }
+
+    // Bir önceki menü kodundaki changeLanguage fonksiyonunun içine ekleme yapıyoruz
+    // Eğer eski fonksiyona dokunmak istemiyorsan bu fonksiyon eskisini otomatik günceller
+    const eskiChangeLanguage = window.changeLanguage;
+    window.changeLanguage = function(lang) {
+        mevcutDil = lang;
+        // Buton yazısını ve arama kutusu placeholder'ını güncelle
+        document.getElementById('theme-btn-text').innerText = temaCevirilari[lang][mevcutMod];
+        document.getElementById('search-input').placeholder = temaCevirilari[lang].placeholder;
+        
+        // Varsa eski fonksiyonu da çalıştır (alert uyarıları için)
+        if(typeof eskiChangeLanguage === 'function') eskiChangeLanguage(lang);
+    };
+
+    // ARAMA MOTORU MANTIĞI VE SAÇMALAMA KONTROLÜ
+    function handleSearch() {
+        const query = document.getElementById('search-input').value.trim().toLowerCase();
+        const resultsDiv = document.getElementById('search-results');
+        
+        if (query.length === 0) {
+            resultsDiv.classList.add('hidden');
+            resultsDiv.innerHTML = '';
+            return;
+        }
+
+        resultsDiv.classList.remove('hidden');
+        resultsDiv.innerHTML = '';
+
+        // Kullanıcının klavyeye rastgele vurup vurmadığını anlayan Regex kontrolü
+        // Üst üste çok fazla sessiz harf, tekrarlayan anlamsız "yyyaaa", "67" gibi saçma girişleri yakalar
+        const sacmaKarakterKontrolu = /([a-z0-9])\1{3,}/g; // Aynı harfin 4+ kez tekrarı
+        const sessizHarfSerisi = /[^aeıioöuü\s]{5,}/g;   // Yan yana 5+ sessiz harf
+        const rakamliKarisik = /^[0-9]+[a-z]{3,}/g;       // "67iyyyaaa" gibi sayıyla başlayan karmaşa
+
+        if (sacmaKarakterKontrolu.test(query) || sessizHarfSerisi.test(query) || rakamliKarisik.test(query) || query.includes("yyyaaa") || query.includes("eyye")) {
+            // Kullanıcı saçmaladı! Özel uyarıyı göster ve popüler/önemli konuları listele
+            resultsDiv.innerHTML = `
+                <div class="search-warning">${temaCevirilari[mevcutDil].uyari}</div>
+                <div class="search-item" onclick="tetikleArama('pup')">👉 PUP Nedir? (Reklam Yazılımları)</div>
+                <div class="search-item" onclick="tetikleArama('popup')">👉 Pop-up Virüslerinden Kurtulma</div>
+                <div class="search-item" onclick="tetikleArama('korunma')">👉 Hackerlardan Korunma Altın Kuralları</div>
+            `;
+            return;
+        }
+
+        // Normal Arama Filtrelemesi (script.js içerisindeki verilere göre)
+        // Eğer script.js'deki anahtarlar (key) kelimede geçiyorsa listeler
+        let sonucBulundu = false;
+        
+        // Kullanıcının arayabileceği olası kelimeler haritası
+        const anahtarKelimeler = {
+            korunma: ["korunma", "hacker", "saldırı", "güvenlik", "şifre", "attack", "protection"],
+            malware: ["malware", "zararlı yazılım", "virüs", "virus"],
+            trojan: ["trojan", "truva atı", "backdoor", "keylogger", "truva"],
+            pup: ["pup", "istenmeyen program", "reklam yazılımı", "toolbar"],
+            popup: ["popup", "pop-up", "pencereler", "reklam engelleme", "kurtulma", "adblock"],
+            os: ["işletim sistemi", "os", "windows", "linux", "macos", "hangisi güvenli"]
+        };
+
+        for (let key in anahtarKelimeler) {
+            // Kullanıcının yazdığı kelime, haritadaki kelimelerden biriyle eşleşiyor mu?
+            const eslesme Var = anahtarKelimeler[key].some(kelime => query.includes(kelime) || kelime.includes(query));
+            
+            if (eslesmeVar) {
+                let baslik = key.toUpperCase() + " Bölümü";
+                if(key === 'popup') baslik = "Pop-up Virüsleri";
+                if(key === 'os') baslik = "Güvenli İşletim Sistemleri";
+                if(key === 'korunma') baslik = "Hackerlardan Korunma";
+                
+                resultsDiv.innerHTML += `<div class="search-item" onclick="tetikleArama('${key}')">🔍 ${baslik}</div>`;
+                sonucBulundu = true;
+            }
+        }
+
+        if (!sonucBulundu) {
+            resultsDiv.innerHTML = `<div class="search-item" style="color:#94a3b8; cursor:default;">Sonuç bulunamadı...</div>`;
+        }
+    }
+
+    // Arama sonucuna tıklandığında sayfayı o bölüme uçuran fonksiyon
+    function tetikleArama(key) {
+        if (typeof window.showContent === 'function') {
+            window.showContent(key);
+            document.getElementById('search-results').classList.add('hidden');
+            document.getElementById('search-input').value = '';
+        }
+    }
+</script>
