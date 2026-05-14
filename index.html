@@ -876,3 +876,258 @@
         }
     };
 </script>
+<div id="cyber-status-panel">
+    <div class="panel-pulse"></div>
+    <div>
+        <span id="status-title" style="font-weight: bold; font-size: 0.8rem; display:block; color:#38bdf8;">CANLI RİSK DURUMU</span>
+        <small id="status-desc" style="font-size: 0.7rem; color:#94a3b8;">Siber Tehdit Seviyesi: Yüksek</small>
+    </div>
+</div>
+
+<button id="theme-toggle-btn" onclick="toggleTheme()">
+    <i class="fa-solid fa-moon"></i> <span id="theme-btn-text">Gece Modu</span>
+</button>
+
+<div id="search-box-container">
+    <div class="search-input-wrapper">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input type="text" id="search-input" placeholder="Sitede ara..." onkeyup="handleSearchNew()">
+    </div>
+    <div id="search-results" class="hidden"></div>
+</div>
+
+<div id="settings-panel">
+    <button id="panel-toggle-btn" onclick="toggleSettingsPanel()">
+        <i class="fa-solid fa-gear"></i>
+    </button>
+    <div id="panel-content" class="hidden">
+        <h3 id="panel-title-text"><i class="fa-solid fa-sliders"></i> Özelleştir</h3>
+        <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 10px 0;">
+        
+        <div class="setting-group">
+            <label id="label-lang"><i class="fa-solid fa-language"></i> Dil</label>
+            <select id="lang-select" onchange="changeLanguageNew(this.value)">
+                <option value="tr">Türkçe</option>
+                <option value="en">English</option>
+                <option value="ru">Русский</option>
+            </select>
+        </div>
+
+        <div class="setting-group">
+            <label id="label-cursor"><i class="fa-solid fa-arrow-pointer"></i> Mouse İmleci</label>
+            <select id="cursor-select" onchange="changeCursor(this.value)">
+                <option value="default" id="opt-cur-def">Varsayılan</option>
+                <option value="pointer" id="opt-cur-ptr">El İşareti</option>
+                <option value="crosshair" id="opt-cur-cross">Hedef Artısı</option>
+                <option value="text" id="opt-cur-txt">Metin Seçimi</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* ARAYÜZÜ CANLANDIRAN YENİ GÖRSEL EKLEMELERİN CSS'LERİ */
+    #cyber-status-panel {
+        position: fixed; bottom: 20px; left: 20px; z-index: 9999;
+        background: #1e293b; border: 1px solid rgba(244, 63, 94, 0.4);
+        padding: 10px 15px; border-radius: 8px; display: flex; align-items: center; gap: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3); font-family: 'Poppins', sans-serif;
+    }
+    .panel-pulse {
+        width: 12px; height: 12px; background-color: #f43f5e; border-radius: 50%;
+        animation: pulseAnimation 1.5s infinite;
+    }
+    @keyframes pulseAnimation {
+        0% { transform: scale(0.9); opacity: 1; box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.7); }
+        70% { transform: scale(1); opacity: 0.8; box-shadow: 0 0 0 10px rgba(244, 63, 94, 0); }
+        100% { transform: scale(0.9); opacity: 1; box-shadow: 0 0 0 0 rgba(244, 63, 94, 0); }
+    }
+
+    /* STANDART ALTYAPI CSS KURALLARI */
+    #theme-toggle-btn {
+        position: fixed; top: 90px; right: 20px; z-index: 9999;
+        background-color: #1e293b; color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3);
+        padding: 10px 16px; border-radius: 20px; font-family: 'Poppins', sans-serif;
+        font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        display: flex; align-items: center; gap: 8px; transition: all 0.3s ease;
+    }
+    body.light-mode { background-color: #ffffff !important; color: #008b8b !important; }
+    body.light-mode .content-card, body.light-mode #theme-toggle-btn, body.light-mode #panel-content, body.light-mode #search-results, body.light-mode #cyber-status-panel {
+        background-color: #f1f5f9 !important; color: #0e7490 !important; border-color: #22d3ee !important;
+    }
+    body.light-mode #search-input { background-color: #ffffff !important; color: #0f172a !important; border-color: #cbd5e1 !important; }
+    #search-box-container { position: fixed; top: 145px; right: 20px; z-index: 9998; width: 320px; font-family: 'Poppins', sans-serif; }
+    .search-input-wrapper { position: relative; width: 100%; }
+    .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #94a3b8; }
+    #search-input { width: 100%; background-color: #1e293b; color: #f8fafc; border: 1px solid rgba(56, 189, 248, 0.3); padding: 10px 12px 10px 38px; border-radius: 8px; outline: none; box-shadow: 0 4px 12px rgba(0,0,0,0.2); font-size: 0.9rem; }
+    #search-results { background-color: #1e293b; border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 8px; margin-top: 5px; max-height: 250px; overflow-y: auto; box-shadow: 0 8px 20px rgba(0,0,0,0.4); padding: 8px; }
+    #search-results.hidden { display: none; }
+    .search-item { padding: 8px 12px; border-radius: 6px; cursor: pointer; color: #f8fafc; font-size: 0.85rem; }
+    .search-item:hover { background-color: rgba(56, 189, 248, 0.15); color: #38bdf8; }
+    .search-warning { color: #f43f5e; font-weight: 600; font-size: 0.85rem; padding: 5px; border-bottom: 1px solid rgba(244, 63, 94, 0.2); }
+    #settings-panel { position: fixed; bottom: 20px; right: 20px; z-index: 9999; font-family: 'Poppins', sans-serif; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+    #panel-toggle-btn { background-color: #38bdf8; color: #0f172a; border: none; width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4); }
+    #panel-content { background-color: #1e293b; border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 15px; width: 220px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+    #panel-content.hidden { display: none; }
+    .setting-group { margin-top: 12px; }
+    .setting-group label { display: block; font-size: 0.8rem; color: #94a3b8; margin-bottom: 5px; }
+    .setting-group select { width: 100%; background-color: #0f172a; color: #f8fafc; border: 1px solid #334155; padding: 8px; border-radius: 6px; }
+    #theme-toggle-btn i {
+    width: 20px; /* İkonlara sabit bir genişlik veriyoruz */
+    text-align: center; /* İkonu kendi içinde ortalıyoruz */
+    display: inline-block;
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+}
+
+/* Gündüz moduna geçildiğinde güneş ikonuna hafif bir parlama efekti */
+body.light-mode #theme-toggle-btn i {
+    color: #f59e0b !important; /* Güneşi tam altın sarısı yapar */
+    transform: scale(1.1);
+}</style>
+
+<script>
+    // Global değişken penceresi
+    window.mevcutDil = 'tr';
+    let dinamikMod = 'gece';
+    let suAnkiSayfaKey = 'korunma';
+
+    const dilPaketi = {
+        tr: {
+            themeGece: "Gece Modu", themeGunduz: "Gündüz Modu", searchPlaceholder: "Sitede ara (Örn: pup)...",
+            searchWarning: "⚠️ Bu önerilere de bakabilirsiniz:", panelTitle: "Özelleştir", labelLang: "Dil",
+            labelCursor: "Mouse İmleci", optCurDef: "Varsayılan", optCurPtr: "El İşareti", optCurCross: "Hedef Artısı", optCurTxt: "Metin Seçimi",
+            statusTitle: "CANLI RİSK DURUMU", statusDesc: "Siber Tehdit Seviyesi: Yüksek",
+            menu: { korunma: "Korsanlardan Korunma", malware: "Malware Nedir?", trojan: "Trojan Nedir?", pup: "PUP Nedir?", popup: "Pop-up Virüsleri", os: "Güvenli İşletim Sistemleri" },
+            keywords: {
+                korunma: ["korunma", "hacker", "saldırı", "güvenlik", "şifre"],
+                malware: ["malware", "zararlı", "virüs", "virus"],
+                trojan: ["trojan", "truva", "atı", "backdoor"],
+                pup: ["pup", "istenmeyen", "reklam", "kurtulma"],
+                popup: ["popup", "pop-up", "pencereler", "kurtulma"],
+                os: ["işletim", "sistemi", "windows", "linux", "macos"]
+            }
+        },
+        en: {
+            themeGece: "Night Mode", themeGunduz: "Day Mode", searchPlaceholder: "Search site (e.g., pup)...",
+            searchWarning: "⚠️ You might also look at these:", panelTitle: "Customize", labelLang: "Language",
+            labelCursor: "Mouse Cursor", optCurDef: "Default", optCurPtr: "Pointer", optCurCross: "Crosshair", optCurTxt: "Text Select",
+            statusTitle: "LIVE RISK STATUS", statusDesc: "Cyber Threat Level: High",
+            menu: { korunma: "Hacker Protection", malware: "What is Malware?", trojan: "What is Trojan?", pup: "What is PUP?", popup: "Pop-up Viruses", os: "Secure OS" },
+            keywords: {
+                korunma: ["protection", "hacker", "attack", "security", "password"],
+                malware: ["malware", "virus"],
+                trojan: ["trojan", "backdoor"],
+                pup: ["pup", "unwanted", "adware", "remove"],
+                popup: ["popup", "pop-up", "adblock"],
+                os: ["operating", "system", "windows", "linux", "macos"]
+            }
+        },
+        ru: {
+            themeGece: "Ночной режим", themeGunduz: "Дневной режим", searchPlaceholder: "Поиск по сайту...",
+            searchWarning: "⚠️ Рекомендуем посмотреть:", panelTitle: "Настройки", labelLang: "Язык",
+            labelCursor: "Курсор мыши", optCurDef: "По умолчанию", optCurPtr: "Указатель", optCurCross: "Перекрестие", optCurTxt: "Текст",
+            statusTitle: "ТЕКУЩИЙ РИСК", statusDesc: "Угроза: Высокая",
+            menu: { korunma: "Защита от хакеров", malware: "Что такое Malware?", trojan: "Что такое Trojan?", pup: "Что такое PUP?", popup: "Pop-up Вирусы", os: "Безопасные ОС" },
+            keywords: {
+                korunma: ["защита", "хакер", "атака", "пароль"],
+                malware: ["malware", "вирус"],
+                trojan: ["trojan", "троян"],
+                pup: ["pup", "удалить"],
+                popup: ["popup", "реклама"],
+                os: ["операционная", "система", "windows", "linux", "macos"]
+            }
+        }
+    };
+
+    function toggleSettingsPanel() { document.getElementById('panel-content').classList.toggle('hidden'); }
+    function changeCursor(type) { document.body.style.cursor = type; }
+
+    function toggleTheme() {
+        document.body.classList.toggle('light-mode');
+        dinamikMod = document.body.classList.contains('light-mode') ? 'gunduz' : 'gece';
+        document.querySelector('#theme-toggle-btn i').className = dinamikMod === 'gunduz' ? "fa-solid fa-sun" : "fa-solid fa-moon";
+        document.getElementById('theme-btn-text').innerText = dinamikMod === 'gunduz' ? dilPaketi[window.mevcutDil].themeGunduz : dilPaketi[window.mevcutDil].themeGece;
+    }
+
+    // KUSURSUZ DİL DEĞİŞTİRME FONKSİYONU
+    function changeLanguageNew(lang) {
+        window.mevcutDil = lang;
+        const veri = dilPaketi[lang];
+
+        // Üst Menüyü Çevir
+        for(let k in veri.menu) {
+            const el = document.getElementById(`nav-${k}`);
+            if(el) el.innerText = veri.menu[k];
+        }
+
+        // Kontrol Elemanlarını Çevir
+        document.getElementById('theme-btn-text').innerText = dinamikMod === 'gunduz' ? veri.themeGunduz : veri.themeGece;
+        document.getElementById('search-input').placeholder = veri.searchPlaceholder;
+        document.getElementById('panel-title-text').innerHTML = `<i class="fa-solid fa-sliders"></i> ${veri.panelTitle}`;
+        document.getElementById('label-lang').innerHTML = `<i class="fa-solid fa-language"></i> ${veri.labelLang}`;
+        document.getElementById('label-cursor').innerHTML = `<i class="fa-solid fa-arrow-pointer"></i> ${veri.labelCursor}`;
+        document.getElementById('status-title').innerText = veri.statusTitle;
+        document.getElementById('status-desc').innerText = veri.statusDesc;
+
+        // ANA İÇERİĞİ DE O ANKİ DİLDE YENİDEN YÜKLE!
+        if (typeof window.showContent === 'function') {
+            window.showContent(suAnkiSayfaKey);
+        }
+    }
+
+    // KUSURSUZ YENİ ARAMA MOTORU FONKSİYONU
+    function handleSearchNew() {
+        const query = document.getElementById('search-input').value.trim().toLowerCase();
+        const resultsDiv = document.getElementById('search-results');
+        const veri = dilPaketi[window.mevcutDil];
+
+        if (query.length === 0) {
+            resultsDiv.classList.add('hidden');
+            return;
+        }
+
+        resultsDiv.classList.remove('hidden');
+        resultsDiv.innerHTML = '';
+
+        // Troll/Saçmalama Kontrolü (Geliştirildi)
+        if (/([a-z0-9])\1{3,}/g.test(query) || /[^aeıioöuü\sаеёиоуыэюя]{5,}/g.test(query) || query.includes("yyyaaa") || query.includes("eyye")) {
+            resultsDiv.innerHTML = `
+                <div class="search-warning">${veri.searchWarning}</div>
+                <div class="search-item" onclick="tetikleAramaNew('pup')">👉 ${veri.menu.pup}</div>
+                <div class="search-item" onclick="tetikleAramaNew('popup')">👉 ${veri.menu.popup}</div>
+                <div class="search-item" onclick="tetikleAramaNew('korunma')">👉 ${veri.menu.korunma}</div>
+            `;
+            return;
+        }
+
+        let buldukMu = false;
+        for (let key in veri.keywords) {
+            let eslesme = veri.keywords[key].some(k => query.includes(k) || k.includes(query));
+            if (eslesme) {
+                resultsDiv.innerHTML += `<div class="search-item" onclick="tetikleAramaNew('${key}')">🔍 ${veri.menu[key]}</div>`;
+                buldukMu = true;
+            }
+        }
+
+        if (!buldukMu) {
+            resultsDiv.innerHTML = `<div class="search-item" style="color:#94a3b8; cursor:default;">...</div>`;
+        }
+    }
+
+    function tetikleAramaNew(key) {
+        if (typeof window.showContent === 'function') {
+            suAnkiSayfaKey = key;
+            window.showContent(key);
+            document.getElementById('search-results').classList.add('hidden');
+            document.getElementById('search-input').value = '';
+        }
+    }
+
+    // Tıklanan sayfayı hafızada tutmak için hook
+    const eskiShow = window.showContent;
+    window.showContent = function(key) {
+        suAnkiSayfaKey = key;
+        if(typeof eskiShow === 'function') eskiShow(key);
+    };
+</script>

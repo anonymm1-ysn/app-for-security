@@ -1,114 +1,113 @@
 const siberVeriler = {
-    korunma: {
-        title: "Hacker Saldırılarından Korunma Yolları",
-        icon: "fa-user-shield",
-        content: `
-            <div class="info-block">
-                <h3>Siber Bilinç Nedir?</h3>
-                <p>Siber bilinç, dijital ortamlarda karşımıza çıkabilecek tehditlerin farkında olmak ve bu tehditlere karşı doğru refleksleri göstermektir. Teknolojik araçları kullanırken güvenliğimizi birinci öncelik yapmak bu bilincin temelidir.</p>
-            </div>
-            <div class="info-block">
-                <h3>Temel Korunma Kuralları</h3>
-                <p>Hackerların en çok kullandığı yöntem kullanıcı hatalarından faydalanmaktır. Güvende kalmak için şu altın kuralları uygulayın:</p>
-                <ul class="tips-list">
-                    <li><strong>Güçlü ve Eşsiz Şifreler:</strong> Her hesabınız için farklı, harf, rakam ve sembol içeren karmaşık şifreler kullanın.</li>
-                    <li><strong>İki Adımlı Doğrulama (2FA):</strong> Şifreniz ele geçirilse bile hesabınızı korumak için SMS veya doğrulama uygulamalarını aktif edin.</li>
-                    <li><strong>Güvenilmeyen Bağlantılar:</strong> E-posta veya mesaj yoluyla gelen, kaynağını bilmediğiniz linklere kesinlikle tıklamayın.</li>
-                    <li><strong>Güncellemeler:</strong> İşletim sisteminizi ve kullandığınız tüm programları her zaman güncel tutun.</li>
-                </ul>
-            </div>
-        `
+    tr: {
+        korunma: {
+            title: "Hacker Saldırılarından Korunma Yolları",
+            icon: "fa-user-shield",
+            content: `<div class="info-block"><h3>Siber Bilinç Nedir?</h3><p>Siber bilinç, dijital ortamlarda karşımıza çıkabilecek tehditlerin farkında olmak ve doğru refleksleri göstermektir.</p></div>
+                      <div class="info-block"><h3>Temel Korunma Kuralları</h3><ul class="tips-list"><li><strong>Güçlü Şifreler:</strong> Karmaşık şifreler kullanın.</li><li><strong>İki Adımlı Doğrulama (2FA):</strong> Hesap güvenliğini ikiye katlayın.</li><li><li><strong>Güvenilmeyen Bağlantılar:</strong> Kaynağı bilinmeyen linklere tıklamayın.</li></ul></div>`
+        },
+        malware: {
+            title: "Malware (Zararlı Yazılım) Nedir?",
+            icon: "fa-virus",
+            content: `<div class="info-block"><h3>Malware Tanımı</h3><p>Sisteminize zarar vermek amacıyla özel olarak tasarlanmış tüm kötü amaçlı yazılımların genel adıdır.</p></div>`
+        },
+        trojan: {
+            title: "Trojan (Truva Atı) Nedir?",
+            icon: "fa-horse",
+            content: `<div class="info-block"><h3>Görünüşte Faydalı, İçeride Tehlikeli</h3><p>Kendisini yararlı bir program gibi göstererek sisteminize sızan ve arka kapı (backdoor) açan zararlılardır.</p></div>`
+        },
+        pup: {
+            title: "PUP (İstenmeyen Program) Nedir?",
+            icon: "fa-box-open",
+            content: `<div class="info-block"><h3>PUP Nedir?</h3><p>Genellikle başka programların kurulumu sırasında yan ürün olarak bilgisayarınıza sızan ve tarayıcınızı bozan yazılımlardır.</p></div>`
+        },
+        popup: {
+            title: "Pop-up Virüsleri ve Reklam Tehlikeleri",
+            icon: "fa-window-restore",
+            content: `<div class="info-block"><h3>Pop-up Tehlikesi</h3><p>Ekranda aniden beliren sahte virüs uyarılarıdır. Kesinlikle tıklanmamalı, bir reklam engelleyici (AdBlocker) kullanılmalıdır.</p></div>`
+        },
+        os: {
+            title: "Hangi İşletim Sistemi Daha Güvenli?",
+            icon: "fa-laptop-code",
+            content: `<div class="info-block"><h3>Sistem Karşılaştırması</h3><p><strong>Windows:</strong> En çok hedef alınan sistemdir. <strong>Linux:</strong> Açık kaynak kodlu ve en güvenli sistemlerden biridir. <strong>macOS:</strong> Kapalı ekosistemiyle dayanıklıdır.</p></div>`
+        }
     },
-    malware: {
-        title: "Malware (Zararlı Yazılım) Nedir?",
-        icon: "fa-virus",
-        content: `
-            <div class="info-block">
-                <h3>Malware Tanımı</h3>
-                <p><strong>Malware</strong> (Malicious Software), bilgisayarınıza, sunucunuza veya ağınıza zarar vermek amacıyla özel olarak tasarlanmış tüm kötü amaçlı yazılımların genel adıdır.</p>
-            </div>
-            <div class="info-block">
-                <h3>Nasıl Bulaşır ve Amacı Nedir?</h3>
-                <p>Genellikle güvenilir olmayan internet sitelerinden indirilen dosyalar, sahte reklamlar veya crackli (korsan) oyun/yazılımlar aracılığıyla bulaşır. Amaçları veri çalmak, sisteminizi kilitlemek veya bilgisayarınızı gizlice kontrol etmektir.</p>
-            </div>
-        `
+    en: {
+        korunma: {
+            title: "Ways to Protect from Hacker Attacks",
+            icon: "fa-user-shield",
+            content: `<div class="info-block"><h3>What is Cyber Awareness?</h3><p>Cyber awareness is being conscious of digital threats and showing the right reflexes.</p></div>
+                      <div class="info-block"><h3>Basic Protection Rules</h3><ul class="tips-list"><li><strong>Strong Passwords:</strong> Use complex passwords.</li><li><li><strong>2FA:</strong> Double your account security.</li><li><strong>Untrusted Links:</strong> Never click unknown links.</li></ul></div>`
+        },
+        malware: {
+            title: "What is Malware?",
+            icon: "fa-virus",
+            content: `<div class="info-block"><h3>Malware Definition</h3><p>General name for all malicious software specifically designed to damage your system.</p></div>`
+        },
+        trojan: {
+            title: "What is a Trojan Horse?",
+            icon: "fa-horse",
+            content: `<div class="info-block"><h3>Seemingly Useful, Inside Dangerous</h3><p>Disguises itself as useful software to infiltrate your system and open backdoors.</p></div>`
+        },
+        pup: {
+            title: "What is PUP?",
+            icon: "fa-box-open",
+            content: `<div class="info-block"><h3>PUP Definition</h3><p>Potentially Unwanted Programs that sneak into your PC during other installations, slowing it down.</p></div>`
+        },
+        popup: {
+            title: "Pop-up Viruses and Ad Threats",
+            icon: "fa-window-restore",
+            content: `<div class="info-block"><h3>Pop-up Threat</h3><p>Sudden fake virus alerts. Do not click them; use a reliable AdBlocker.</p></div>`
+        },
+        os: {
+            title: "Which Operating System is Safer?",
+            icon: "fa-laptop-code",
+            content: `<div class="info-block"><h3>OS Comparison</h3><p><strong>Windows:</strong> Most targeted. <strong>Linux:</strong> Open-source and highly secure. <strong>macOS:</strong> Strong due to closed ecosystem.</p></div>`
+        }
     },
-    trojan: {
-        title: "Trojan (Truva Atı) Nedir?",
-        icon: "fa-horse",
-        content: `
-            <div class="info-block">
-                <h3>Görünüşte Faydalı, İçeride Tehlikeli</h3>
-                <p>Adını tarihteki Truva Atı hikayesinden alan <strong>Trojan</strong>, kendisini yararlı veya zararsız bir program (örneğin bir oyun yaması, sistem hızlandırıcı) gibi göstererek sisteminize sızan zararlı yazılımlardır.</p>
-            </div>
-            <div class="info-block">
-                <h3>Trojan Tehlikeleri</h3>
-                <ul class="tips-list">
-                    <li>Arka kapı (Backdoor) açarak hackerların bilgisayarınıza tam erişim sağlamasına neden olur.</li>
-                    <li>Klavyede bastığınız tuşları (Keylogger yardımıyla) kaydederek şifrelerinizi çalabilir.</li>
-                    <li>Kameranızı ve mikrofonunuzu gizlice aktif edebilir.</li>
-                </ul>
-            </div>
-        `
-    },
-    pup: {
-        title: "PUP (Potansiyel Olarak İstenmeyen Program) Nedir?",
-        icon: "fa-box-open",
-        content: `
-            <div class="info-block">
-                <h3>PUP Nedir?</h3>
-                <p><strong>PUP</strong> (Potentially Unwanted Program), tam olarak doğrudan bir virüs olmasa da, bilgisayarınıza genellikle bilginiz dışında veya başka bir programın kurulumu sırasında "yan ürün" olarak yüklenen yazılımlardır.</p>
-            </div>
-            <div class="info-block">
-                <h3>Belirtileri Nelerdir?</h3>
-                <p>Tarayıcınızın giriş sayfasını değiştiren arama motorları, bilgisayarınızı yavaşlatan gereksiz temizlik araçları ve durup dururken açılan araç çubukları (toolbar) tipik PUP örnekleridir. İndirme yaparken "Gelişmiş Kurulum" seçeneğini seçerek bu ek tikleri kaldırmalısınız.</p>
-            </div>
-        `
-    },
-    popup: {
-        title: "Pop-up Virüsleri ve Reklam Tehlikeleri",
-        icon: "fa-window-restore",
-        content: `
-            <div class="info-block">
-                <h3>Pop-up Virüsü Nedir?</h3>
-                <p>İnternette gezinirken ekranda aniden beliren, genellikle "Bilgisayarınızda virüs bulundu!", "Ödül kazandınız!" gibi sahte uyarılar içeren agresif pencerelerdir.</p>
-            </div>
-            <div class="info-block">
-                <h3>Nasıl Korunulur?</h3>
-                <ul class="tips-list">
-                    <li>Bu pencerelerdeki hiçbir butona tıklamayın, pencereyi doğrudan kapatın.</li>
-                    <li>Güvenilir bir tarayıcı reklam engelleyicisi (AdBlocker) kullanın.</li>
-                    <li>Tarayıcınızın bildirim izinlerini kontrol edin; bilmediğiniz sitelerin size bildirim göndermesini engelleyin.</li>
-                </ul>
-            </div>
-        `
-    },
-    os: {
-        title: "Hangi İşletim Sistemi Daha Güvenli?",
-        icon: "fa-laptop-code",
-        content: `
-            <div class="info-block">
-                <h3>İşletim Sistemleri ve Güvenlik Yaklaşımları</h3>
-                <p>Tek başına hiçbir işletim sistemi %100 güvenli değildir, ancak mimari yapıları gereği siber saldırılara karşı dayanıklılıkları farklılık gösterir:</p>
-            </div>
-            <div class="info-block">
-                <h3>Karşılaştırma</h3>
-                <p><strong>Windows:</strong> Dünyada en çok kullanılan işletim sistemi olduğu için hackerların bir numaralı hedefidir. Güncel tutulduğunda ve Windows Defender aktif olduğunda güvenlidir ancak kullanıcının dikkatli olması şarttır.</p>
-                <p style="margin-top: 10px;"><strong>Linux:</strong> Açık kaynak kodlu yapısı ve gelişmiş yetkilendirme (root) sistemi sayesinde siber güvenlik uzmanlarının ve sunucuların vazgeçilmezidir. Virüs bulaşma ihtimali Windows'a kıyasla oldukça düşüktür.</p>
-                <p style="margin-top: 10px;"><strong>macOS:</strong> Unix tabanlı mimarisi ve Apple'ın kapalı ekosistemi sayesinde oldukça güvenlidir. Ancak popülerliği arttıkça macOS hedefli hedefli malware sayısı da artmaktadır.</p>
-            </div>
-        `
+    ru: {
+        korunma: {
+            title: "Способы защиты от хакерских атак",
+            icon: "fa-user-shield",
+            content: `<div class="info-block"><h3>Что такое кибер-осведомленность?</h3><p>Это понимание цифровых угроз и умение правильно на них реагировать.</p></div>
+                      <div class="info-block"><h3>Основные правила</h3><ul class="tips-list"><li><strong>Сложные пароли:</strong> Используйте надежные пароли.</li><li><li><strong>2FA:</strong> Включите двухфакторную аутентификацию.</li><li><strong>Подозрительные ссылки:</strong> Не переходите по неизвестным ссылкам.</li></ul></div>`
+        },
+        malware: {
+            title: "Что такое вредоносное ПО (Malware)?",
+            icon: "fa-virus",
+            content: `<div class="info-block"><h3>Определение</h3><p>Общее название для всех программ, созданных для нанесения вреда вашему компьютеру.</p></div>`
+        },
+        trojan: {
+            title: "Что такое Троян (Trojan)?",
+            icon: "fa-horse",
+            content: `<div class="info-block"><h3>Полезная снаружи, опасная внутри</h3><p>Программа, которая маскируется под полезный софт, чтобы открыть хакерам скрытый доступ.</p></div>`
+        },
+        pup: {
+            title: "Что такое PUP?",
+            icon: "fa-box-open",
+            content: `<div class="info-block"><h3>Определение PUP</h3><p>Потенциально нежелательные программы, которые устанавливаются скрытно и замедляют систему.</p></div>`
+        },
+        popup: {
+            title: "Всплывающие вирусы и угрозы рекламы",
+            icon: "fa-window-restore",
+            content: `<div class="info-block"><h3>Угроза всплывающих окон</h3><p>Ложные предупреждения о вирусах. Ни в коем случае не нажимайте на них, используйте AdBlocker.</p></div>`
+        },
+        os: {
+            title: "Какая операционная система безопаснее?",
+            icon: "fa-laptop-code",
+            content: `<div class="info-block"><h3>Сравнение ОС</h3><p><strong>Windows:</strong> Самая атакуемая. <strong>Linux:</strong> Открытый исходный код, очень безопасна. <strong>macOS:</strong> Надежна благодаря закрытой экосистеме.</p></div>`
+        }
     }
 };
 
-// İçeriği dinamik olarak değiştiren ana fonksiyon
+// İçeriği ekrana basan ana fonksiyon
 function showContent(key) {
-    const data = siberVeriler[key];
+    // Eğer dil seçilmemişse varsayılan olarak global penceredeki mevcut dili al
+    const lang = window.mevcutDil || 'tr';
+    const data = siberVeriler[lang][key];
     if (!data) return;
 
     const contentArea = document.getElementById("dynamic-content");
-    
-    // HTML içeriğini güncelleme
     contentArea.innerHTML = `
         <div class="content-header">
             <i class="fa-solid ${data.icon}"></i>
@@ -119,17 +118,11 @@ function showContent(key) {
         </div>
     `;
 
-    // Aktif menü elemanını değiştirme ve görsel efekt verme
-    document.querySelectorAll(".nav-links a").forEach(link => {
-        link.classList.remove("active");
-    });
-    document.getElementById(`nav-${key}`).classList.add("active");
-
-    // Sayfa geçişinde yukarı yumuşak kaydırma efekti
-    window.scrollTo({ top: document.getElementById("dynamic-content").offsetTop - 120, behavior: 'smooth' });
+    document.querySelectorAll(".nav-links a").forEach(link => link.classList.remove("active"));
+    const activeNav = document.getElementById(`nav-${key}`);
+    if (activeNav) activeNav.classList.add('active');
 }
 
-// Sayfa ilk açıldığında 'korunma' içeriğini varsayılan olarak yükle
 document.addEventListener("DOMContentLoaded", () => {
     showContent("korunma");
 });
